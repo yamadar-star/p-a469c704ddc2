@@ -1,0 +1,314 @@
+/* ポートフォリオ共通：インライン編集スタイル */
+
+/* ========================
+   閲覧モード：編集UIを非表示
+   ======================== */
+.btn-add-item,
+.btn-delete-item,
+.btn-delete-card,
+.card-add-btn,
+.drag-handle {
+  display: none;
+}
+
+/* 閲覧モードでは contenteditable を無効化 */
+body:not(.edit-mode) [contenteditable] {
+  cursor: default;
+  outline: none !important;
+  pointer-events: none;
+  -webkit-user-modify: read-only;
+}
+
+/* ========================
+   編集モード：編集UIを表示
+   ======================== */
+body.edit-mode .btn-add-item {
+  display: inline-block;
+}
+
+body.edit-mode .btn-delete-item {
+  display: block;
+}
+
+body.edit-mode .btn-delete-card {
+  display: block;
+}
+
+body.edit-mode .card-add-btn {
+  display: flex;
+}
+
+body.edit-mode .drag-handle {
+  display: inline-flex;
+}
+
+body.edit-mode [contenteditable] {
+  cursor: text;
+  pointer-events: auto;
+  border-radius: 6px;
+  transition: outline 0.15s, background 0.15s;
+  outline: 2px solid transparent;
+}
+
+body.edit-mode [contenteditable]:hover {
+  outline: 2px dashed rgba(245, 190, 80, 0.45);
+}
+
+body.edit-mode [contenteditable]:focus {
+  outline: 2px solid rgba(245, 190, 80, 0.85);
+  background: rgba(255, 200, 100, 0.07);
+}
+
+/* ========================
+   li テキストスパン
+   ======================== */
+.li-text {
+  display: inline;
+  flex: 1;
+  min-width: 0;
+}
+
+/* 閲覧モード：li の見た目を維持（::before マーカーを使用） */
+.card ul li,
+[data-addlist] > li {
+  position: relative;
+}
+
+/* 編集モード：フレックスに切り替えてハンドルと並べる */
+body.edit-mode .card ul li,
+body.edit-mode [data-addlist] > li {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  padding-left: 0;
+  padding-right: 1.6em;
+}
+
+body.edit-mode .card ul li::before,
+body.edit-mode [data-addlist] > li::before {
+  display: none;
+}
+
+/* ========================
+   ドラッグハンドル
+   ======================== */
+.drag-handle {
+  align-items: center;
+  cursor: grab;
+  color: rgba(255, 200, 100, 0.35);
+  font-size: 0.9rem;
+  user-select: none;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+/* カードのドラッグハンドル（左上固定） */
+.card-drag-handle {
+  position: absolute;
+  top: 0.55rem;
+  left: 0.65rem;
+  font-size: 1.05rem;
+}
+
+/* カードに position:relative（編集モード時） */
+body.edit-mode .card,
+body.edit-mode .fav-card {
+  position: relative;
+}
+
+/* ========================
+   画像アップロード（編集モード時）
+   ======================== */
+body.edit-mode [data-photo] {
+  cursor: pointer;
+  transition: outline 0.15s;
+  outline: 2px dashed transparent;
+}
+
+body.edit-mode [data-photo]:hover {
+  outline: 2px dashed rgba(245, 190, 80, 0.5);
+}
+
+body.edit-mode [data-photo] .placeholder {
+  pointer-events: none;
+}
+
+/* ========================
+   ドラッグ中
+   ======================== */
+.dragging {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ========================
+   保存トースト
+   ======================== */
+#toast {
+  position: fixed;
+  bottom: 1.6rem;
+  right: 1.6rem;
+  background: rgba(40, 20, 5, 0.92);
+  border: 1px solid rgba(245, 180, 60, 0.5);
+  color: rgba(255, 220, 130, 0.95);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+  z-index: 100;
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========================
+   ロックボタン
+   ======================== */
+#edit-lock-btn {
+  position: fixed;
+  bottom: 1.4rem;
+  left: 1.4rem;
+  background: rgba(40, 15, 5, 0.75);
+  border: 1px solid rgba(240, 160, 60, 0.35);
+  border-radius: 999px;
+  width: 2.4rem;
+  height: 2.4rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s, border-color 0.2s;
+  z-index: 200;
+}
+
+#edit-lock-btn:hover {
+  background: rgba(80, 25, 10, 0.9);
+  border-color: rgba(245, 190, 80, 0.65);
+}
+
+/* ========================
+   リスト削除ボタン
+   ======================== */
+.btn-delete-item {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255, 120, 100, 0.4);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0.1rem 0.15rem;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.btn-delete-item:hover {
+  color: rgba(255, 70, 50, 1) !important;
+}
+
+/* ========================
+   リスト「＋追加」ボタン
+   ======================== */
+.btn-add-item {
+  margin-top: 0.5rem;
+  background: none;
+  border: none;
+  color: rgba(255, 200, 100, 0.45);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  padding: 0.15rem 0;
+  transition: color 0.2s;
+  font-family: inherit;
+}
+
+.btn-add-item:hover {
+  color: rgba(255, 220, 120, 0.9);
+}
+
+/* ========================
+   カード削除ボタン
+   ======================== */
+.btn-delete-card {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  background: rgba(60, 15, 8, 0.7);
+  border: 1px solid rgba(255, 100, 80, 0.4);
+  color: rgba(255, 120, 100, 0.65);
+  font-size: 0.72rem;
+  cursor: pointer;
+  padding: 0.2rem 0.45rem;
+  border-radius: 999px;
+  line-height: 1;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  z-index: 2;
+  font-family: inherit;
+}
+
+.btn-delete-card:hover {
+  color: rgba(255, 70, 50, 1);
+  background: rgba(120, 25, 15, 0.9);
+  border-color: rgba(255, 80, 60, 0.7);
+}
+
+/* ========================
+   「＋カードを追加」ボタン
+   ======================== */
+.card-add-btn {
+  background: rgba(80, 20, 10, 0.2);
+  border: 1.5px dashed rgba(240, 150, 60, 0.28);
+  border-radius: 16px;
+  padding: 2rem 1.6rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  min-height: 120px;
+  text-align: center;
+}
+
+.card-add-btn:hover {
+  background: rgba(120, 35, 15, 0.32);
+  border-color: rgba(245, 190, 80, 0.5);
+}
+
+.card-add-plus {
+  font-size: 1.8rem;
+  color: rgba(255, 200, 100, 0.45);
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.card-add-btn:hover .card-add-plus {
+  color: rgba(255, 220, 120, 0.8);
+}
+
+.card-add-btn small {
+  font-size: 0.75rem;
+  color: rgba(255, 200, 100, 0.35);
+  letter-spacing: 0.08em;
+  transition: color 0.2s;
+}
+
+.card-add-btn:hover small {
+  color: rgba(255, 220, 120, 0.65);
+}

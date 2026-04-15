@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node C:/Users/山田凜/Desktop/portfolio/.claude/refresh-chrome.js",
+            "timeout": 10,
+            "statusMessage": "Chromeを更新中..."
+          }
+        ]
+      }
+    ]
+  }
+}

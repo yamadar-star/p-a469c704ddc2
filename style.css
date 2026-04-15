@@ -1,0 +1,781 @@
+/* ========================
+   ポートフォリオ共通スタイル
+   ======================== */
+
+/* ---- リセット ---- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---- body 共通 ---- */
+body {
+  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+  background: linear-gradient(
+    180deg,
+    #1a0d2e 0%,
+    #4a1550 18%,
+    #8b2560 35%,
+    #c94040 52%,
+    #e06820 68%,
+    #f0a020 82%,
+    #a04010 100%
+  );
+  min-height: 100vh;
+}
+
+/* トップページ */
+body.page-home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow-x: hidden;
+  min-height: 100vh;
+  padding: 3rem 2rem;
+}
+
+/* サブページ（自己紹介・趣味・料理） */
+body.page-sub {
+  padding: 4rem 2rem 3rem;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ---- 星アニメーション ---- */
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
+}
+
+/* ========================
+   トップページ
+   ======================== */
+.container {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.container h1 {
+  font-family: 'Klee One', cursive;
+  font-size: 4rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+  color: #f5f5f5;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #e0e0e0;
+  letter-spacing: 0.1em;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.45rem 1.4rem;
+  border-radius: 999px;
+  background: rgba(180, 60, 10, 0.25);
+  backdrop-filter: blur(4px);
+  margin-bottom: 2.5rem;
+}
+
+.intro {
+  color: #e0e0e0;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  margin-top: 1.2rem;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #f5f5f5;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  padding: 0.55rem 1.6rem;
+  border: 1px solid rgba(245, 160, 80, 0.4);
+  border-radius: 999px;
+  background: rgba(160, 50, 10, 0.3);
+  backdrop-filter: blur(6px);
+  transition: background 0.25s, border-color 0.25s, transform 0.1s, filter 0.1s;
+}
+
+.nav a:hover {
+  background: rgba(220, 90, 20, 0.5);
+  border-color: rgba(245, 190, 100, 0.7);
+}
+
+.nav a:active {
+  transform: scale(0.94);
+  filter: brightness(1.2);
+}
+
+/* ========================
+   トップページ：流れ星（青白い彗星）
+   ======================== */
+.shooting-star {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* 尾の本体 — 細長いグラデーションライン */
+.shooting-star span {
+  position: absolute;
+  width: 280px;
+  height: 1.5px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(100,170,255,0.08) 20%,
+    rgba(140,200,255,0.3) 50%,
+    rgba(190,225,255,0.65) 75%,
+    rgba(220,240,255,0.9) 92%,
+    #e8f4ff 100%
+  );
+  border-radius: 0 2px 2px 0;
+  transform: rotate(148deg);
+  opacity: 0;
+  filter: drop-shadow(0 0 3px rgba(120,180,255,0.4))
+          drop-shadow(0 0 8px rgba(100,160,255,0.2));
+}
+
+/* 先端の光る頭部 */
+.shooting-star span::after {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #fff 0%, rgba(180,220,255,0.8) 40%, rgba(120,180,255,0.3) 70%, transparent 100%);
+  border-radius: 50%;
+  box-shadow:
+    0 0 6px 2px rgba(160,210,255,0.6),
+    0 0 16px 4px rgba(120,180,255,0.3),
+    0 0 30px 8px rgba(100,160,255,0.12);
+}
+
+/* ---- 各個体 ---- */
+/* 右上スタート位置 + 出現タイミング */
+.ss-1 { top: -5%; right: 8%;  left: auto; width: 300px; animation: meteor1 28s ease-out 0s infinite; }
+.ss-2 { top: -5%; right: 20%; left: auto; width: 250px; height: 1px; animation: meteor2 32s ease-out 7s infinite; }
+.ss-2::after { width: 4px; height: 4px; }
+.ss-3 { top: -5%; right: 2%;  left: auto; width: 320px; height: 2px; animation: meteor3 26s ease-out 16s infinite; }
+.ss-4 { top: -5%; right: 30%; left: auto; width: 220px; height: 1px; animation: meteor4 35s ease-out 22s infinite; }
+.ss-4::after { width: 3px; height: 3px; }
+.ss-5 { top: -5%; right: 12%; left: auto; width: 280px; animation: meteor5 30s ease-out 11s infinite; }
+
+/* 流れるアニメーション — 右上→左下、全体の12%だけ表示 */
+@keyframes meteor1 {
+  0%   { transform: rotate(148deg) translateX(0); opacity: 0; }
+  1%   { opacity: 1; }
+  6%   { opacity: 0.8; }
+  10%  { opacity: 0.15; }
+  12%  { transform: rotate(148deg) translateX(85vh); opacity: 0; }
+  100% { transform: rotate(148deg) translateX(85vh); opacity: 0; }
+}
+
+@keyframes meteor2 {
+  0%   { transform: rotate(152deg) translateX(0); opacity: 0; }
+  1%   { opacity: 0.7; }
+  5%   { opacity: 0.5; }
+  9%   { opacity: 0.1; }
+  11%  { transform: rotate(152deg) translateX(75vh); opacity: 0; }
+  100% { transform: rotate(152deg) translateX(75vh); opacity: 0; }
+}
+
+@keyframes meteor3 {
+  0%   { transform: rotate(145deg) translateX(0); opacity: 0; }
+  1.5% { opacity: 1; }
+  7%   { opacity: 0.85; }
+  11%  { opacity: 0.12; }
+  13%  { transform: rotate(145deg) translateX(90vh); opacity: 0; }
+  100% { transform: rotate(145deg) translateX(90vh); opacity: 0; }
+}
+
+@keyframes meteor4 {
+  0%   { transform: rotate(150deg) translateX(0); opacity: 0; }
+  0.8% { opacity: 0.45; }
+  4%   { opacity: 0.35; }
+  7%   { opacity: 0.08; }
+  9%   { transform: rotate(150deg) translateX(65vh); opacity: 0; }
+  100% { transform: rotate(150deg) translateX(65vh); opacity: 0; }
+}
+
+@keyframes meteor5 {
+  0%   { transform: rotate(147deg) translateX(0); opacity: 0; }
+  1%   { opacity: 0.9; }
+  6%   { opacity: 0.7; }
+  10%  { opacity: 0.1; }
+  12%  { transform: rotate(147deg) translateX(80vh); opacity: 0; }
+  100% { transform: rotate(147deg) translateX(80vh); opacity: 0; }
+}
+
+/* ========================
+   トップページ：ウィジェット
+   ======================== */
+.widget-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.2rem;
+  margin-top: 2.5rem;
+  width: 100%;
+  max-width: 680px;
+}
+
+.widget {
+  background: rgba(80, 20, 10, 0.45);
+  border: 1px solid rgba(240, 150, 60, 0.3);
+  border-radius: 16px;
+  padding: 1.4rem 1.6rem;
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.widget h3 {
+  color: rgba(255, 220, 130, 0.9);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(245, 160, 80, 0.2);
+  padding-bottom: 0.6rem;
+}
+
+/* ---- 天気 ---- */
+.weather-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.weather-emoji {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.weather-temp {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #f5f5f5;
+  line-height: 1;
+}
+
+.weather-temp small {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.weather-desc {
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.weather-detail {
+  color: rgba(255, 200, 120, 0.6);
+  font-size: 0.75rem;
+}
+
+/* ---- 占い ---- */
+.fortune-item {
+  text-align: left;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(245, 160, 80, 0.12);
+}
+
+.fortune-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.fortune-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.fortune-rank {
+  font-size: 0.85rem;
+  color: #f5f5f5;
+  font-weight: 700;
+}
+
+.fortune-sign {
+  font-size: 0.85rem;
+  color: rgba(255, 220, 130, 0.9);
+  font-weight: 600;
+}
+
+.fortune-text {
+  color: #e0e0e0;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  margin-bottom: 0.15rem;
+}
+
+.fortune-lucky {
+  color: rgba(255, 200, 120, 0.6);
+  font-size: 0.72rem;
+}
+
+.fortune-worst {
+  margin-top: 0.3rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed rgba(255, 100, 80, 0.3);
+}
+
+.widget-loading {
+  color: rgba(255, 200, 120, 0.4);
+  font-size: 0.8rem;
+}
+
+.widget-error {
+  color: rgba(255, 120, 100, 0.6);
+  font-size: 0.8rem;
+}
+
+/* ========================
+   サブページ共通：ヘッダー
+   ======================== */
+header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #f5f5f5;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  color: #e0e0e0;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+}
+
+/* ========================
+   サブページ共通：グリッド
+   ======================== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.8rem;
+  max-width: 1080px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================
+   サブページ共通：カード
+   ======================== */
+.card {
+  background: rgba(80, 20, 10, 0.45);
+  border: 1px solid rgba(240, 150, 60, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  transition: border-color 0.25s, background 0.25s;
+}
+
+.card:hover {
+  background: rgba(120, 35, 15, 0.55);
+  border-color: rgba(245, 190, 80, 0.55);
+}
+
+.card .icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.card h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #f5f5f5;
+}
+
+.card p {
+  color: #e0e0e0;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 0.75rem;
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.card ul li {
+  color: #e0e0e0;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  padding-left: 1.1em;
+  position: relative;
+}
+
+.card ul li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ========================
+   サブページ共通：フッター
+   ======================== */
+footer {
+  text-align: center;
+  margin-top: 3.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- 共通サブナビ ---- */
+.sub-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.sub-nav a {
+  text-decoration: none;
+  color: #f5f5f5;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  padding: 0.45rem 1.2rem;
+  border: 1px solid rgba(245, 160, 80, 0.4);
+  border-radius: 999px;
+  background: rgba(160, 50, 10, 0.3);
+  backdrop-filter: blur(6px);
+  transition: background 0.25s, border-color 0.25s, transform 0.1s, filter 0.1s;
+}
+
+.sub-nav a:hover {
+  background: rgba(220, 90, 20, 0.5);
+  border-color: rgba(245, 190, 100, 0.7);
+}
+
+.sub-nav a:active {
+  transform: scale(0.94);
+  filter: brightness(1.2);
+}
+
+.sub-nav a.current {
+  background: rgba(220, 90, 20, 0.5);
+  border-color: rgba(245, 190, 100, 0.7);
+  pointer-events: none;
+}
+
+/* ========================
+   食べ物・料理ページ
+   ======================== */
+
+/* ---- セクション見出し ---- */
+.section-title {
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(255, 210, 120, 0.85);
+  text-transform: uppercase;
+  margin-bottom: 1.6rem;
+  position: relative;
+  z-index: 1;
+}
+
+.section-title span {
+  display: inline-block;
+  border-bottom: 1px solid rgba(245, 160, 80, 0.4);
+  padding-bottom: 0.3rem;
+}
+
+/* ---- 好きな食べ物グリッド ---- */
+.fav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.6rem;
+  max-width: 860px;
+  margin: 0 auto 4rem;
+  position: relative;
+  z-index: 1;
+}
+
+.fav-card {
+  background: rgba(80, 20, 10, 0.45);
+  border: 1px solid rgba(240, 150, 60, 0.3);
+  border-radius: 16px;
+  padding: 2rem 1.6rem;
+  backdrop-filter: blur(10px);
+  text-align: center;
+  transition: border-color 0.25s, background 0.25s, transform 0.2s;
+}
+
+.fav-card:hover {
+  background: rgba(120, 35, 15, 0.55);
+  border-color: rgba(245, 190, 80, 0.55);
+  transform: translateY(-4px);
+}
+
+.fav-card .emoji {
+  font-size: 3rem;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+.fav-card h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #f5f5f5;
+  margin-bottom: 0.6rem;
+}
+
+.fav-card p {
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+/* ---- 得意料理リスト ---- */
+.recipe-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  max-width: 860px;
+  margin: 0 auto 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.recipe-card {
+  background: rgba(80, 20, 10, 0.45);
+  border: 1px solid rgba(240, 150, 60, 0.3);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  display: flex;
+  transition: border-color 0.25s, background 0.25s;
+}
+
+.recipe-card:hover {
+  background: rgba(120, 35, 15, 0.55);
+  border-color: rgba(245, 190, 80, 0.55);
+}
+
+.recipe-photo {
+  flex: 0 0 42%;
+  position: relative;
+  overflow: hidden;
+  background: rgba(50, 10, 5, 0.6);
+  min-height: 200px;
+}
+
+.recipe-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.recipe-photo .placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: rgba(255, 200, 120, 0.45);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+}
+
+.recipe-photo .placeholder .ph-icon {
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+.recipe-body {
+  flex: 1;
+  padding: 1.6rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.recipe-body h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f5f5f5;
+  margin-bottom: 0.75rem;
+}
+
+.recipe-body p {
+  color: #e0e0e0;
+  font-size: 0.92rem;
+  line-height: 1.85;
+}
+
+/* ========================
+   おすすめの店ページ
+   ======================== */
+.shop-intro {
+  text-align: center;
+  max-width: 960px;
+  margin: 0 auto 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+.shop-intro h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #f5f5f5;
+  margin-bottom: 0.5rem;
+}
+.shop-intro .sub {
+  color: #e0e0e0;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+}
+
+.photo-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 960px;
+  margin: 0 auto 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+.photo-row img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(240, 150, 60, 0.3);
+}
+
+.access-bar {
+  max-width: 960px;
+  margin: 2.5rem auto 0;
+  background: rgba(80, 20, 10, 0.45);
+  border: 1px solid rgba(240, 150, 60, 0.3);
+  border-radius: 16px;
+  padding: 1.4rem 2rem;
+  backdrop-filter: blur(10px);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.access-bar p {
+  color: #e0e0e0;
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+.access-bar strong {
+  color: #f5f5f5;
+}
+
+@media (max-width: 560px) {
+  /* トップページ */
+  body.page-home {
+    padding: 2rem 1.2rem;
+  }
+  .container h1 {
+    font-size: 2.2rem;
+  }
+  .badge {
+    font-size: 1rem;
+    padding: 0.35rem 1.1rem;
+  }
+  .intro {
+    font-size: 0.85rem;
+  }
+  .nav {
+    gap: 0.7rem;
+  }
+  .nav a {
+    font-size: 0.82rem;
+    padding: 0.4rem 1rem;
+  }
+  .widget-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* サブページ */
+  body.page-sub {
+    padding: 3rem 1.2rem 2rem;
+  }
+  header h1 {
+    font-size: 2rem;
+  }
+  .sub-nav {
+    gap: 0.5rem;
+  }
+  .sub-nav a {
+    font-size: 0.72rem;
+    padding: 0.35rem 0.8rem;
+  }
+
+  /* カード */
+  .grid {
+    gap: 1.2rem;
+  }
+  .card {
+    padding: 1.4rem;
+  }
+
+  /* 食べ物ページ */
+  .fav-grid {
+    gap: 1.2rem;
+  }
+  .fav-card {
+    padding: 1.4rem 1.2rem;
+  }
+  .recipe-card {
+    flex-direction: column;
+  }
+  .recipe-photo {
+    flex: none;
+    min-height: 180px;
+  }
+
+  /* おすすめの店 */
+  .shop-intro h2 {
+    font-size: 1.4rem;
+  }
+  .photo-row {
+    grid-template-columns: 1fr;
+  }
+  .photo-row img {
+    height: 180px;
+  }
+}
